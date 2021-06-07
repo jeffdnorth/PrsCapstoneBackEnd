@@ -27,6 +27,12 @@ namespace PrsCapstoneBackEnd.Controllers
         {
             return await _context.User.ToListAsync();
         }
+        /*
+         * Additional Method
+         * Login(username, password) : [GET: /api/users/username/password] - Authenticates a user by username and password combination. 
+         * This method reads the user table for the username and password passed in and returns the instance if found; 
+         * otherwise returns NotFound
+         */
 
         // GET: api/Users/5
         [HttpGet("{id}")]

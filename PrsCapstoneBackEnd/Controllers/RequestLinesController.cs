@@ -21,18 +21,29 @@ namespace PrsCapstoneBackEnd.Controllers
             _context = context;
         }
 
+        /* GET: api/Products   added lambda in parens ---include( x=>x.Vendor).ToListAsync();
+// -- to tie product FK to pulling the vendor name in data Get
+ Example from Products get:
+* //     
+[HttpGet]
+public async Task<ActionResult<IEnumerable<Product>>> GetProduct()
+{
+return await _context.Product.Include( x=>x.Vendor).ToListAsync();
+}
+*/
         // GET: api/RequestLines
         [HttpGet]
         public async Task<ActionResult<IEnumerable<RequestLine>>> GetRequestLine()
         {
-            return await _context.RequestLine.ToListAsync();
+            return await _context.RequestLine.Include(x=>x.Product).ToListAsync();
         }
 
+        //ADDED LAMBDA BELOW
         // GET: api/RequestLines/5
         [HttpGet("{id}")]
         public async Task<ActionResult<RequestLine>> GetRequestLine(int id)
         {
-            var requestLine = await _context.RequestLine.FindAsync(id);
+            var requestLine = await _context.RequestLine.Include(x=>x.Product).SingleOrDefaultAsync(x=>x.Id == id);
 
             if (requestLine == null)
             {

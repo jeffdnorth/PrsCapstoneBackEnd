@@ -22,10 +22,13 @@ namespace PrsCapstoneBackEnd.Controllers
         }
 
         // GET: api/Products
+        /* added lambda in parens ---include( x=>x.Vendor).ToListAsync();
+         -- to tie product FK (VendorId) to pulling the vendor name in data Get
+        */     
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Product>>> GetProduct()
         {
-            return await _context.Product.ToListAsync();
+            return await _context.Product.Include( x=>x.Vendor).ToListAsync();
         }
 
         // GET: api/Products/5
