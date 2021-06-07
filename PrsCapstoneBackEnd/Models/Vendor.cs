@@ -28,7 +28,7 @@ namespace PrsCapstoneBackEnd.Models
         [Required, StringLength(5)]
         public string Zip { get; set; }
 
-        [StringLength(5)]
+        [StringLength(12)]
         public string Phone { get; set; }
 
         [StringLength(255)]
