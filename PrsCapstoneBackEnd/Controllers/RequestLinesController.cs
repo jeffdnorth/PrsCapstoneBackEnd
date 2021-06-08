@@ -10,14 +10,6 @@ using PrsCapstoneBackEnd.Models;
 
 namespace PrsCapstoneBackEnd.Controllers
 {
-    /*ADDITIONAL METHOD  JUST ONE 
-     RecalculateRequestTotal(requestId) : [PRIVATE] - Recalculates the Total property whenever an insert, update, 
-    or delete occurs to the Requestlines attached to the request. 
-    This method is private and cannot be called from outside the class. 
-    It should still be executed asynchronously. It should be called from the PUT, POST, and DELETE methods
-    only AFTER the SaveChangesAsync() is called in those methods.
-      
-     */
 
     [Route("api/[controller]")]
     [ApiController]
@@ -30,21 +22,55 @@ namespace PrsCapstoneBackEnd.Controllers
             _context = context;
         }
 
-        /* GET: api/Products   added lambda in parens ---include( x=>x.Vendor).ToListAsync();
-           to tie product FK to pulling the vendor name in data Get
-         Example from Products get:
-     
+        /*ADDITIONAL METHOD  JUST ONE 
+   RecalculateRequestTotal(requestId) : [PRIVATE] - Recalculates the Total property whenever an insert, update, 
+  or delete occurs to the Requestlines attached to the request. 
+  This method is private and cannot be called from outside the class. 
+  It should still be executed asynchronously. It should be called from the PUT, POST, and DELETE methods
+  only AFTER the SaveChangesAsync() is called in those methods.
+    FROM PoWeb
+    //below is method from thur 6-3 homework tuff method
+      //recalculatepototal is name we chose for method, pass thru POId , variable name we choose is POID  po id
+  //l is var for lines, x is fred var
+
+      private async Task RecalculatePoTotal(int POID)
+      {
+          var po = await _context.POs.FindAsync(POID);
+          if (po == null) throw new Exception("FAtal: PO is not found to recalc!");
+          var poTotal = (from l in _context.polines
+                        join i in _context.Items
+                        on l.ItemId equals i.ID
+                        where l.POId == POID
+                        select new { LineTotal = l.Quantity * i.Price})
+                       .Sum( x => x.LineTotal);
+          po.Total = poTotal;
+          await _context.SaveChangesAsync();
+   */
+        private async Task RecalculateRequestTotal(int RequestId)
+        {
+            var requ = await _context.Request.FindAsync(RequestId);
+            if (Request == null) throw new Exception("Fatal: Request is not found to recalculate!");
+            var requTotal = (from l in _context.RequestLine
+                             join i in _context.Product
+                             on l.ProductId equals i.Id
+                             where l.RequestId  == RequestId
+                             select new { LineTotal = l.Quantity * i.Price })
+                             .Sum(x => x.LineTotal);
+            requ.Total = requTotal;
+            await _context.SaveChangesAsync();
+        }
+
+        /* GET: api/Products   added lambda in parens ---include( x=>x.Vendor).ToListAsync(); to tie product FK 
+         * to pulling the vendor name in data Get Example from Products get:   
     [HttpGet]
     public async Task<ActionResult<IEnumerable<Product>>> GetProduct()
-    {
-    return await _context.Product.Include( x=>x.Vendor).ToListAsync();
-    }
+    { return await _context.Product.Include( x=>x.Vendor).ToListAsync(); }
 */
         // GET: api/RequestLines
         [HttpGet]
         public async Task<ActionResult<IEnumerable<RequestLine>>> GetRequestLine()
         {
-            return await _context.RequestLine.Include(x=>x.Product).ToListAsync();
+            return await _context.RequestLine.Include(x => x.Product).ToListAsync();
         }
 
         //ADDED LAMBDA BELOW
@@ -52,7 +78,7 @@ namespace PrsCapstoneBackEnd.Controllers
         [HttpGet("{id}")]
         public async Task<ActionResult<RequestLine>> GetRequestLine(int id)
         {
-            var requestLine = await _context.RequestLine.Include(x=>x.Product).SingleOrDefaultAsync(x=>x.Id == id);
+            var requestLine = await _context.RequestLine.Include(x => x.Product).SingleOrDefaultAsync(x => x.Id == id);
 
             if (requestLine == null)
             {

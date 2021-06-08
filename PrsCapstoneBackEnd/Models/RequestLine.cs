@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
+using System.Text.Json.Serialization;
 using System.Threading.Tasks;
 
 namespace PrsCapstoneBackEnd.Models
@@ -10,7 +11,10 @@ namespace PrsCapstoneBackEnd.Models
     {
         public int Id { get; set; }
 
+      //  public static string Requestlines = "REVIEW";
+
         //FK s
+        [JsonIgnore]
         public virtual Request Request { get; set; }
         public int RequestId { get; set; }
 
@@ -21,9 +25,9 @@ namespace PrsCapstoneBackEnd.Models
         //def to 1 
         [Required]
         public int Quantity { get; set; } = 1;
+
+        
     }
-
-
 
     /*
      * Quantity must be greater than or equal to zero (cannot be negative)

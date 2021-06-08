@@ -35,15 +35,13 @@ namespace PrsCapstoneBackEnd.Controllers
         }
        */
         // 4. GetReviews(userId) : [GET: /api/requests/review/{id}] - Gets requests in "REVIEW" status and not owned by the user with the primary key of id.
-        [HttpGet("requests")]
-        public async Task<ActionResult<IEnumerable<Request>>> GetRequestsinReview()
+        [HttpGet("requests/{userid}")]
+        public async Task<ActionResult<IEnumerable<Request>>> GetRequestsinReview(int userid)
         {
             return await _context.Request
-                    .Where(r => r.Status == Request.StatusIsReview)
-                    .Include(r => ! r.Id)
+                    .Where(r => r.Status == PrsCapstoneBackEnd.Models.Request.StatusReview && userid != r.UserId)
                     .ToListAsync();
         }
-
 
         /* GET: api/Products   added lambda in parens ---include( x=>x.Vendor).ToListAsync();
    // -- to tie product FK to pulling the vendor name in data Get
@@ -66,8 +64,11 @@ namespace PrsCapstoneBackEnd.Controllers
         [HttpGet("{id}")]
         public async Task<ActionResult<Request>> GetRequest(int id)
         {
-            var request = await _context.Request.FindAsync(id);
-
+            var request = await _context.Request
+                                .Include(r => r.User)
+                                .Include(r => r.RequestLines)
+                                        .ThenInclude(rl => rl.Product)
+                                .SingleOrDefaultAsync(r => r.Id == id);
             if (request == null)
             {
                 return NotFound();
@@ -94,7 +95,7 @@ namespace PrsCapstoneBackEnd.Controllers
         [HttpPut("{id)}/approve")]
         public async Task<IActionResult> PutStatusToApprove(int id, Request request)
         {
-            
+
             if (request == null)
             {
                 return NotFound();
@@ -104,12 +105,12 @@ namespace PrsCapstoneBackEnd.Controllers
         }
 
         //3. Reject(request) : [PUT: /api/requests/5/reject] - Sets the status of the request for the id provided to "REJECTED"
-                     // PUT method for reject
+        // PUT method for reject
 
         [HttpPut("{id}/reject")]
         public async Task<IActionResult> PutStatusToReject(int id, Request request)
         {
-            
+
             if (request == null)
             {
                 return NotFound();

@@ -35,7 +35,7 @@ namespace PrsCapstoneBackEnd.Controllers
 
          */
         //[GET: /api/users/username/password] 
-        [HttpGet("{username]/password")]
+        [HttpGet("{username}/{password}")]
         public async Task<ActionResult<User>> Login(string username, string password)
         {
             var user = await _context.User

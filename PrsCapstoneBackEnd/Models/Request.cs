@@ -9,6 +9,8 @@ namespace PrsCapstoneBackEnd.Models
 {
     public class Request
     {
+
+        public static string StatusReview = "REVIEW";
         public int Id { get; set; }
 
         [Required, StringLength(80)]
@@ -35,6 +37,8 @@ namespace PrsCapstoneBackEnd.Models
         //FK
         public virtual User User { get; set; }
         public int UserId { get; set; }
+
+        public IEnumerable<RequestLine> RequestLines { get; set; }
 
         public Request() { }
 
