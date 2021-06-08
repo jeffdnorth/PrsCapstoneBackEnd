@@ -10,6 +10,15 @@ using PrsCapstoneBackEnd.Models;
 
 namespace PrsCapstoneBackEnd.Controllers
 {
+    /*ADDITIONAL METHOD  JUST ONE 
+     RecalculateRequestTotal(requestId) : [PRIVATE] - Recalculates the Total property whenever an insert, update, 
+    or delete occurs to the Requestlines attached to the request. 
+    This method is private and cannot be called from outside the class. 
+    It should still be executed asynchronously. It should be called from the PUT, POST, and DELETE methods
+    only AFTER the SaveChangesAsync() is called in those methods.
+      
+     */
+
     [Route("api/[controller]")]
     [ApiController]
     public class RequestLinesController : ControllerBase
@@ -22,14 +31,14 @@ namespace PrsCapstoneBackEnd.Controllers
         }
 
         /* GET: api/Products   added lambda in parens ---include( x=>x.Vendor).ToListAsync();
-// -- to tie product FK to pulling the vendor name in data Get
- Example from Products get:
-* //     
-[HttpGet]
-public async Task<ActionResult<IEnumerable<Product>>> GetProduct()
-{
-return await _context.Product.Include( x=>x.Vendor).ToListAsync();
-}
+           to tie product FK to pulling the vendor name in data Get
+         Example from Products get:
+     
+    [HttpGet]
+    public async Task<ActionResult<IEnumerable<Product>>> GetProduct()
+    {
+    return await _context.Product.Include( x=>x.Vendor).ToListAsync();
+    }
 */
         // GET: api/RequestLines
         [HttpGet]

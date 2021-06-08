@@ -23,5 +23,16 @@ namespace PrsCapstoneBackEnd.Data
         public DbSet<PrsCapstoneBackEnd.Models.User> User { get; set; }
 
         public DbSet<PrsCapstoneBackEnd.Models.Vendor> Vendor { get; set; }
+
+        /*FROM TqlPoWebApi PoContext.cs
+         *   protected override void OnModelCreating(ModelBuilder builder)
+        {
+            builder.Entity<Employee>(e =>
+            {
+                e.HasIndex(p => p.Login).IsUnique();
+            });
+        }
+         * 
+         */
     }
 }

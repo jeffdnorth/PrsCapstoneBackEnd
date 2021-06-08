@@ -28,13 +28,27 @@ namespace PrsCapstoneBackEnd.Controllers
             return await _context.User.ToListAsync();
         }
         /*
-         * Additional Method
-         * Login(username, password) : [GET: /api/users/username/password] - Authenticates a user by username and password combination. 
-         * This method reads the user table for the username and password passed in and returns the instance if found; 
-         * otherwise returns NotFound
-         */
+          Additional Method
+          Login(username, password) : [GET: /api/users/username/password] - Authenticates a user by username and password combination. 
+          This method reads the user table for the username and password passed in and returns the instance if found; 
+          otherwise returns NotFound
 
-        // GET: api/Users/5
+         */
+        //[GET: /api/users/username/password] 
+        [HttpGet("{username]/password")]
+        public async Task<ActionResult<User>> Login(string username, string password)
+        {
+            var user = await _context.User
+                            .SingleOrDefaultAsync(u => u.Username == username && u.Password == password);
+            if (user == null)
+            {
+                return NotFound();
+            }
+            return (user);
+        }
+
+
+        // GET: api/Users/5   SAME AS PoWeb
         [HttpGet("{id}")]
         public async Task<ActionResult<User>> GetUser(int id)
         {
