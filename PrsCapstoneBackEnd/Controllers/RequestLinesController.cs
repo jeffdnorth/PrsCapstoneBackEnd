@@ -28,23 +28,6 @@ namespace PrsCapstoneBackEnd.Controllers
   This method is private and cannot be called from outside the class. 
   It should still be executed asynchronously. It should be called from the PUT, POST, and DELETE methods
   only AFTER the SaveChangesAsync() is called in those methods.
-    FROM PoWeb
-    //below is method from thur 6-3 homework tuff method
-      //recalculatepototal is name we chose for method, pass thru POId , variable name we choose is POID  po id
-  //l is var for lines, x is fred var
-
-      private async Task RecalculatePoTotal(int POID)
-      {
-          var po = await _context.POs.FindAsync(POID);
-          if (po == null) throw new Exception("FAtal: PO is not found to recalc!");
-          var poTotal = (from l in _context.polines
-                        join i in _context.Items
-                        on l.ItemId equals i.ID
-                        where l.POId == POID
-                        select new { LineTotal = l.Quantity * i.Price})
-                       .Sum( x => x.LineTotal);
-          po.Total = poTotal;
-          await _context.SaveChangesAsync();
    */
         private async Task RecalculateRequestTotal(int RequestId)
         {

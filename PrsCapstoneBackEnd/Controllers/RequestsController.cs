@@ -21,19 +21,7 @@ namespace PrsCapstoneBackEnd.Controllers
             _context = context;
         }
 
-        /*
-       4. GetReviews(userId) : [GET: /api/requests/review/{id}] - Gets requests in "REVIEW" status and not owned by the user with the primary key of id.
-          //FROM PoWeb
-             // GET: api/POes GET ALL THE POS WHERE STATUS IS SET TO REVIEW
-        [HttpGet("reviews")]
-        public async Task<ActionResult<IEnumerable<PO>>> GetPOsinReview()
-        {
-            return await _context.POs
-                    .Where(p => p.Status == PO.StatusReview)
-                    .Include(p => p.Employee)
-                    .ToListAsync(); 
-        }
-       */
+ 
         // 4. GetReviews(userId) : [GET: /api/requests/review/{id}] - Gets requests in "REVIEW" status and not owned by the user with the primary key of id.
         [HttpGet("requests/{userid}")]
         public async Task<ActionResult<IEnumerable<Request>>> GetRequestsinReview(int userid)
