@@ -20,7 +20,7 @@ namespace PrsCapstoneBackEnd.Data
 
         public DbSet<PrsCapstoneBackEnd.Models.RequestLine> RequestLine { get; set; }
 
-        public DbSet<PrsCapstoneBackEnd.Models.User> User { get; set; }
+        public DbSet<PrsCapstoneBackEnd.Models.User> Users { get; set; }
 
         public DbSet<PrsCapstoneBackEnd.Models.Vendor> Vendor { get; set; }
 

@@ -2,15 +2,17 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using PrsCapstoneBackEnd.Data;
 
 namespace PrsCapstoneBackEnd.Migrations
 {
     [DbContext(typeof(PrsCapstoneBackEndContext))]
-    partial class PrsCapstoneBackEndContextModelSnapshot : ModelSnapshot
+    [Migration("20210610132302_made user table plural")]
+    partial class madeusertableplural
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
