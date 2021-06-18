@@ -30,6 +30,8 @@ namespace PrsCapstoneBackEnd
 
             services.AddDbContext<PrsCapstoneBackEndContext>(options =>
                     options.UseSqlServer(Configuration.GetConnectionString("PrsCapstoneBackEndContext")));
+
+            services.AddCors();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -39,6 +41,7 @@ namespace PrsCapstoneBackEnd
             {
                 app.UseDeveloperExceptionPage();
             }
+            app.UseCors(x => x.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader());
 
             app.UseRouting();
 
