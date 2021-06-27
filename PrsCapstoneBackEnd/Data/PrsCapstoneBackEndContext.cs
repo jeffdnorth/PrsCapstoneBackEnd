@@ -24,15 +24,27 @@ namespace PrsCapstoneBackEnd.Data
 
         public DbSet<PrsCapstoneBackEnd.Models.Vendor> Vendor { get; set; }
 
-        /*FROM TqlPoWebApi PoContext.cs
-         *   protected override void OnModelCreating(ModelBuilder builder)
+        /*F NEED THIS FOR VENDOR, USER AND PRODUCT  ALL NEED TO BE UNIQUE
+          */
+        protected override void OnModelCreating(ModelBuilder builder)
         {
-            builder.Entity<Employee>(e =>
+            builder.Entity<User>(u =>
             {
-                e.HasIndex(p => p.Login).IsUnique();
+                u.HasIndex(u => u.Username).IsUnique();
             });
+
+            builder.Entity<Vendor>(v =>
+            {
+                v.HasIndex(v => v.Code).IsUnique();
+            });
+
+            builder.Entity<Product>(p =>
+            {
+                p.HasIndex(p => p.PartNbr).IsUnique();
+            });
+
+
         }
-         * 
-         */
+       
     }
 }
