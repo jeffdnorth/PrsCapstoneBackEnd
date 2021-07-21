@@ -87,6 +87,8 @@ namespace PrsCapstoneBackEnd.Controllers
             try
             {
                 await _context.SaveChangesAsync();
+                // need below on post and delete for capstone request line total for review
+                await RecalculateRequestTotal(requestLine.RequestId);
             }
             catch (DbUpdateConcurrencyException)
             {
@@ -111,6 +113,8 @@ namespace PrsCapstoneBackEnd.Controllers
         {
             _context.RequestLine.Add(requestLine);
             await _context.SaveChangesAsync();
+            // added for capstone total on request line for review
+            await RecalculateRequestTotal(requestLine.RequestId);
 
             return CreatedAtAction("GetRequestLine", new { id = requestLine.Id }, requestLine);
         }
@@ -127,6 +131,8 @@ namespace PrsCapstoneBackEnd.Controllers
 
             _context.RequestLine.Remove(requestLine);
             await _context.SaveChangesAsync();
+            // added for capstone total on request line for review
+            await RecalculateRequestTotal(requestLine.RequestId);
 
             return requestLine;
         }
