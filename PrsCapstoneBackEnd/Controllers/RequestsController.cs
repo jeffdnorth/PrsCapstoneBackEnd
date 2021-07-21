@@ -23,7 +23,7 @@ namespace PrsCapstoneBackEnd.Controllers
 
  
         // 4. GetReviews(userId) : [GET: /api/requests/review/{id}] - Gets requests in "REVIEW" status and not owned by the user with the primary key of id.
-        [HttpGet("requests/{userid}")]
+        [HttpGet("reviews/{userid}")]
         public async Task<ActionResult<IEnumerable<Request>>> GetRequestsinReview(int userid)
         {
             return await _context.Request
