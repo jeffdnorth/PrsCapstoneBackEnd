@@ -80,14 +80,9 @@ namespace PrsCapstoneBackEnd.Controllers
         }
 
         // 2. Approve(request) : [PUT: /api/requests/5/approve] - Sets the status of the request for the id provided to "APPROVED"
-        [HttpPut("{id)}/approve")]
+        [HttpPut("{id}/approve")]
         public async Task<IActionResult> PutStatusToApprove(int id, Request request)
         {
-
-            if (request == null)
-            {
-                return NotFound();
-            }
             request.Status = "APPROVE";
             return await PutRequest(id, request);
         }
@@ -98,11 +93,6 @@ namespace PrsCapstoneBackEnd.Controllers
         [HttpPut("{id}/reject")]
         public async Task<IActionResult> PutStatusToReject(int id, Request request)
         {
-
-            if (request == null)
-            {
-                return NotFound();
-            }
             request.Status = "Reject";
             return await PutRequest(id, request);
         }
